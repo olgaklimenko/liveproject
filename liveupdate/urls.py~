@@ -1,7 +1,8 @@
-from django.conf.urls import *
+from django.conf.urls import patterns, url
 from liveupdate.models import Update
-from liveupdate.views import ListView 
+from liveupdate import views
 
 urlpatterns = patterns('',
-    url(r'^$', ListView.as_view()),
+    url(r'^$', views.ListView.as_view()),
+    url(r'^liveupdates/updates-after/(?P<id>\d+)/$', views.updates_after),
 )
