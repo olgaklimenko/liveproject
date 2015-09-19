@@ -22,7 +22,7 @@ PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
 MEDIA_ROOT = os.path.join(PUBLIC_DIR, 'media')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(PUBLIC_DIR, 'static')
+#STATIC_ROOT = os.path.join(PUBLIC_DIR, 'static')
 STATIC_URL = '/static/'
 
 # Quick-start development settings - unsuitable for production
@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -110,5 +111,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-
+STATICFILES_DIRS = (
+    os.path.join(PUBLIC_DIR, "static"),
+)
 

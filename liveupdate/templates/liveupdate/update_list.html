@@ -1,52 +1,36 @@
 <html>
     <head>
         <title>Live Update</title>
-        <style type="text/css">
-            body {
-                margin: 30px;
-                font-family: sans-serif;
-                background: #fff;
-            }
-            h1 { background: #ccf; padding: 20px; }
-            div.update { width: 100%; padding: 5px; }
-            div.even { background: #ddd; }
-            div.timestamp { float: left; font-weight: bold; }
-            div.text { float: left; padding-left: 10px; }
-            div.clear { clear: both; height: 1px; }
-        </style>
+        
+        {% load staticfiles %} 
+            <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}" />
+        
         <script type="text/javascript" language="javascript"
               <script src="{{ MEDIA_URL }}js/jquery-1.11.3.min.js"/>
         </script>
-        <script type="text/javascript" language="javascript">
-            function update() {
-                update_holder = $("#update-holder");
-                most_recent = update_holder.find("div:first");
-                $.getJSON("/liveupdate/updates-after/" + most_recent.attr('id')+"/",
-                    function(data) {
-                        cycle_class = most_recent.hasClass("odd")
-                            ? "even" : "odd";
-                        jQuery.each(data, function() {
-                            update_holder.prepend('<div id="'+this.pk
-                                +'"class="update ' +cycle_class
-                                +'"><div class="timestamp">'
-                                +this.fields.timestamp
-                                +'</div><div class="text">'
-                                +this.fields.text
-                                +'</div><div class="clear"></div></div>'
-                            );
-                            cycle_class = (cycle_class == "odd")
-                                ? "even" : "odd"
-                        });                  
-                    }
-                );
-            }
-            $(document).ready(function() {
-                setInterval("update()", 20000);
-            })
+        <script type="text/javascript" language="javascript" 
+            <script src="{{ MEDIA_URL }}js/main.js"/>
         </script>
     </head>
+    
     <body>
         <h1> Welcome to the Live Update!</h1>
+        
+        <a href="#addUpdate"> Add Update </a>
+        <div id="addUpdate" class="newUpdate">
+            <div>
+                <form action="{% url 'add' %}" method="post">
+                {% csrf_token %}
+                    <fieldset title="Add Update">
+                        <legend>Add Update</legend>
+	                <a href="#close" title="Закрыть" class="close">X</a>
+	                <input type="text" name="updateText" placeholder="Add your update here" maxlength="255"/>
+                        <input type="submit" value="Update!"/>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        
         <p> This site will automatically refresh itself </p>
         
         {% if object_list %}
